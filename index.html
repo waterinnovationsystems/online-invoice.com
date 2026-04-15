@@ -168,11 +168,11 @@ GSTN: 29AEHPB6749Q1ZQ
 <th>UOM</th>
 <th>Rate</th>
 <th>Amount</th>
+<th>Action</th>
 </tr>
 </table>
 
 <button class="btn" onclick="addRow()">Add Item</button>
-<button class="btn" onclick="let t=document.getElementById('items'); if(t.rows.length>1)t.deleteRow(-1)">Remove Item</button>
 
 <br><br>
 
@@ -198,6 +198,58 @@ Authorized Signatory
 <button class="btn" onclick="window.print()">Save / Print Invoice</button>
 
 </div>
+
+<script>
+let count = 0;
+
+function addRow() {
+    count++;
+    let table = document.getElementById("items");
+    let row = table.insertRow();
+
+    row.innerHTML = `
+    <td>${count}</td>
+    <td><input></td>
+    <td><input></td>
+    <td><input type="number" oninput="calc(this)"></td>
+    <td><input></td>
+    <td><input type="number" oninput="calc(this)"></td>
+    <td><input readonly></td>
+    <td><button onclick="this.parentElement.parentElement.remove();calculate()">X</button></td>
+    `;
+}
+
+function calc(el) {
+    let row = el.parentNode.parentNode;
+    let qty = row.cells[3].children[0].value || 0;
+    let rate = row.cells[5].children[0].value || 0;
+
+    row.cells[6].children[0].value = qty * rate;
+    calculate();
+}
+
+function calculate() {
+    let rows = document.getElementById("items").rows;
+    let total = 0;
+
+    for (let i = 1; i < rows.length; i++) {
+        let val = rows[i].cells[6].children[0].value || 0;
+        total += parseFloat(val);
+    }
+
+    let cgst = total * 0.09;
+    let sgst = total * 0.09;
+
+    document.getElementById("subtotal").value = total.toFixed(2);
+    document.getElementById("cgst").value = cgst.toFixed(2);
+    document.getElementById("sgst").value = sgst.toFixed(2);
+    document.getElementById("gst").value = (cgst + sgst).toFixed(2);
+    document.getElementById("grand").value = (total + cgst + sgst).toFixed(2);
+}
+</script>
+
+</body>
+</html>
 
     
 <script>
