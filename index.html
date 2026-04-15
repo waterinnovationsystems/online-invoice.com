@@ -285,54 +285,6 @@ function calculate() {
     <style>
 /* your existing CSS */
 
-// DEMO GST DATABASE (Replace with real API later)
-const gstDatabase = {
-    "29ABCDE1234F1Z5": "ABC Pvt Ltd\nBangalore, Karnataka\nGST: 29ABCDE1234F1Z5\nPhone: 9876543210",
-    "27AAAPL1234C1ZV": "XYZ Industries\nMumbai, Maharashtra\nGST: 27AAAPL1234C1ZV\nPhone: 9123456780"
-};
-
-// FETCH GST DETAILS
-function fetchGST() {
-    let gst = document.getElementById("gstInput").value.trim().toUpperCase();
-    let output = document.getElementById("vendorDetails");
-
-    if (!gst) {
-        alert("Please enter GST Number");
-        return;
-    }
-
-    // Simulated lookup
-    if (gstDatabase[gst]) {
-        output.value = gstDatabase[gst];
-        output.readOnly = true;
-    } else {
-        output.value = "GST not found.\nYou can enter details manually.";
-        output.readOnly = false;
-    }
-}
-
-// ENABLE MANUAL ENTRY
-function enableManual() {
-    let output = document.getElementById("vendorDetails");
-    output.readOnly = false;
-    output.focus();
-}
-
-
-
-    
-
-fetch("https://api.example.com/gst/" + gst)
-.then(res => res.json())
-.then(data => {
-    output.value = data.name + "\n" + data.address + "\nGST: " + gst;
-})
-.catch(() => {
-    output.value = "GST not found. Enter manually.";
-});        
-
-
-
         
 function loadSign(event) {
     const reader = new FileReader();
