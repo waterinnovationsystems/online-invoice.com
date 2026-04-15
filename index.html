@@ -77,6 +77,15 @@ textarea {
     padding: 8px;
     cursor: pointer;
 }
+
+
+@media print {
+    .btn {
+        display: none;
+    }
+}
+
+
 </style>
 
 </head>
@@ -93,8 +102,7 @@ textarea {
 <!-- LOGO -->
 <img src="logo/logo_color.png" class="logo" alt="Company Logo">
 
-
-
+<b></b><br>
 NO.695/90, Mahadeva Arcade,<br>
 Hesarghatta Main Road,<br>
 Bangalore - 560097<br>
@@ -236,6 +244,23 @@ function calculate() {
     document.getElementById("grand").value = (total + cgst + sgst).toFixed(2);
 }
 </script>
+
+<style>
+/* your existing CSS */
+
+.btn {
+    margin-top: 10px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* ADD THIS */
+@media print {
+    .btn {
+        display: none;
+    }
+}
+</style>
 
 </body>
 </html>
