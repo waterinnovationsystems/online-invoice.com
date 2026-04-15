@@ -299,15 +299,17 @@ function addRow() {
     let row = table.insertRow();
 
     row.innerHTML = `
-        <td>${count}</td>
-        <td><input></td>
-        <td><input></td>
-        <td><input type="number" oninput="calc(this)"></td>
-        <td><input></td>
-        <td><input type="number" oninput="calc(this)"></td>
-        <td><input readonly></td>
+    <td>${count}</td>
+    <td><input></td>
+    <td><input></td>
+    <td><input type="number" oninput="calc(this)"></td>
+    <td><input></td>
+    <td><input type="number" oninput="calc(this)"></td>
+    <td><input readonly></td>
+    <td><button onclick="this.parentElement.parentElement.remove();calculate()">X</button></td>
     `;
 }
+
 </script>
 
 
