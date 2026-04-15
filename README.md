@@ -21,26 +21,6 @@ This tool allows you to create, calculate, and print GST-compliant invoices easi
 - ✅ Company logo support
 - ✅ Lightweight (No external libraries required)
 
----
-
-## 🏢 Company Details
-
-**Water Innovation Systems**  
-NO.695/90, Mahadeva Arcade,  
-Hesarghatta Main Road,  
-Bangalore - 560097  
-📞 Phone: 9900204599  
-🧾 GSTN: 29AEHPB6749Q1ZQ  
-
----
-
-## 📂 Project Structure
-
-
-
-
-
----
 
 ## ⚙️ How to Use
 
@@ -66,9 +46,6 @@ Bangalore - 560097
 - Total GST = CGST + SGST  
 - Grand Total = Subtotal + GST  
 
----
-
-## 🖼️ Logo Setup
 
 Replace the logo path in HTML:
 
