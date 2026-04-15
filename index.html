@@ -162,7 +162,7 @@ GSTN: 29AEHPB6749Q1ZQ
 </tr>
 </table>
 
-<button class="btn" onclick="addRow()">Add Item</button>
+<button class="btn" onclick="let t=document.getElementById('items');let r=t.insertRow();r.innerHTML='<td>'+(t.rows.length-1)+'</td><td><input></td><td><input></td><td><input type=number oninput=calc(this)></td><td><input></td><td><input type=number oninput=calc(this)></td><td><input readonly></td>';">Add Item</button>
 <button class="btn" onclick="document.getElementById('items').deleteRow(-1)">Remove Item</button>
 
 <br><br>
