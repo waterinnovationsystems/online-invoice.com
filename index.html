@@ -199,12 +199,6 @@ Authorized Signatory
 
 </div>
 
-<th class="no-print">Action</th>
-
-<td class="no-print">
-    <button onclick="this.parentElement.parentElement.remove();calculate()">X</button>
-</td>
-
     
 <script>
 let count = 0;
@@ -378,49 +372,7 @@ function calculate() {
 
     <style>
 /* your existing CSS */
-
-@media print {
-    .no-print {
-        display: none !important;
-    }
-}
         
-
-@media print {
-
-    /* Hide Action column header */
-    th:last-child {
-        display: none;
-    }
-
-    /* Hide Action column cells */
-    td:last-child {
-        display: none;
-    }
-
-}
-
-
-        
-    @media print {
-
-    #signatureContainer {
-        border: none;
-    }
-
-    #draggableSign {
-        border: none;
-    }
-
-    input[type="file"],
-    .btn {
-        display: none !important;
-    }
-}
-
-
-
-    
 
 
 /* PRINT SETTINGS */
