@@ -307,6 +307,76 @@ function calculate() {
 
 
 
+/* A4 PRINT SETTINGS */
+@media print {
+
+    /* Set A4 page */
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+    }
+
+    /* Fit content inside A4 */
+    .invoice-box {
+        width: 100%;
+        max-width: 190mm;   /* A4 safe width */
+        margin: auto;
+        border: 1px solid black;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    /* Prevent content breaking */
+    table {
+        page-break-inside: avoid;
+    }
+
+    tr, td, th {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    /* Prevent overflow */
+    input, textarea {
+        overflow: hidden;
+        white-space: normal;
+    }
+
+    /* Hide buttons */
+    .btn {
+        display: none;
+    }
+
+    /* Prevent elements from going outside */
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Optional: reduce font slightly for fit */
+    body {
+        font-size: 11px;
+    }
+
+    /* Footer text */
+    body::after {
+        content: "Computer Generated Document";
+        position: fixed;
+        bottom: 5mm;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 10px;
+    }
+}
+    
+
     
     
 </style>
