@@ -260,6 +260,70 @@ function calculate() {
 /* your existing CSS */
 
 
+
+
+
+/* PRINT SETTINGS */
+@media print {
+
+    @page {
+        size: A4 portrait;
+        margin: 10mm;
+    }
+
+    body {
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .invoice-box {
+        width: 190mm;   /* Fit inside A4 */
+        padding: 10mm;
+        border: 1px solid black;
+        box-sizing: border-box;
+    }
+
+    table {
+        page-break-inside: avoid;
+    }
+
+    tr, td, th {
+        page-break-inside: avoid;
+    }
+
+    /* Hide buttons while printing */
+    .btn {
+        display: none !important;
+    }
+
+    /* Hide any unwanted elements */
+    input, textarea {
+        border: none;
+        outline: none;
+    }
+
+    /* Add footer text */
+    .print-footer {
+        display: block;
+        text-align: center;
+        font-size: 11px;
+        margin-top: 10px;
+    }
+}
+
+/* Hide print footer in screen */
+.print-footer {
+    display: none;
+}
+
+
+
+    
+
+
+
+    
+
 /* A4 PRINT SETTINGS */
 @media print {
 
