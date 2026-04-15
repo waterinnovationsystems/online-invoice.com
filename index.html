@@ -275,53 +275,6 @@ function calculate() {
     <style>
 /* your existing CSS */
 
-        
-function loadSign(event) {
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-        let box = document.getElementById("draggableSign");
-        box.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%;">`;
-    };
-
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-
-    
-
-// DRAG FUNCTION
-let dragItem = document.getElementById("draggableSign");
-
-let offsetX = 0, offsetY = 0, isDragging = false;
-
-dragItem.addEventListener("mousedown", function(e) {
-    isDragging = true;
-    offsetX = e.offsetX;
-    offsetY = e.offsetY;
-});
-
-document.addEventListener("mousemove", function(e) {
-    if (!isDragging) return;
-
-    let container = document.getElementById("signatureContainer");
-    let rect = container.getBoundingClientRect();
-
-    let x = e.clientX - rect.left - offsetX;
-    let y = e.clientY - rect.top - offsetY;
-
-    dragItem.style.left = x + "px";
-    dragItem.style.top = y + "px";
-});
-
-document.addEventListener("mouseup", function() {
-    isDragging = false;
-});
-    
-
-
-
-
     @media print {
 
     #signatureContainer {
