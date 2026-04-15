@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tax Invoice</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.invoice-box {
+    width: 800px;
+    margin: auto;
+    border: 2px solid black;
+    padding: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.company {
+    width: 60%;
+    font-size: 12px;
+}
+
+.invoice-details {
+    width: 40%;
+}
+
+.logo {
+    width: 120px;
+    margin-bottom: 5px;
+}
+
+.vendor-box {
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th {
+    background: #999;
+}
+
+td {
+    padding: 5px;
+}
+
+input, textarea {
+    width: 100%;
+    border: none;
+    font-size: 12px;
+}
+
+textarea {
+    resize: none;
+}
+
+.right {
+    text-align: right;
+}
+
+.btn {
+    margin-top: 10px;
+    padding: 8px;
+    cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="invoice-box">
+
+<!-- HEADER -->
+<div class="header">
+
+<div class="company">
+
+<!-- LOGO -->
+<img src="logo.png" class="logo" alt="Company Logo">
+
+<b>WATER INNOVATION SYSTEMS</b><br>
+NO.695/90, Mahadeva Arcade,<br>
+Hesarghatta Main Road,<br>
+Bangalore - 560097<br>
+Phone: 9900204599<br>
+GSTN: 29AEHPB6749Q1ZQ
+
+<!-- VENDOR DETAILS -->
+<div class="vendor-box">
+<br>
+<b>Vendor / Buyer Details:</b><br>
+<textarea rows="4" placeholder="Enter Buyer Name, Address, GST, Contact..."></textarea>
+</div>
+
+</div>
+
+<div class="invoice-details">
+<table>
+<tr><td>Invoice No</td><td><input></td></tr>
+<tr><td>Date</td><td><input type="date"></td></tr>
+<tr><td>Delivery Note</td><td><input></td></tr>
+<tr><td>Payment Mode</td><td><input></td></tr>
+<tr><td>Buyer's Order No</td><td><input></td></tr>
+<tr><td>Dated</td><td><input type="date"></td></tr>
+<tr><td>E-Way Bill</td><td><input></td></tr>
+<tr><td>Transport</td><td><input></td></tr>
+<tr><td>Place of Supply</td><td><input></td></tr>
+</table>
+</div>
+
+</div>
+
+<br>
+
+<!-- ITEM TABLE -->
+<table id="items">
+<tr>
+<th>Sl No</th>
+<th>Product/Service</th>
+<th>HSN</th>
+<th>Qty</th>
+<th>UOM</th>
+<th>Rate</th>
+<th>Amount</th>
+</tr>
+</table>
+
+<button class="btn" onclick="addRow()">Add Item</button>
+
+<br><br>
+
+<!-- TOTALS -->
+<table>
+<tr>
+<td>Total Before Tax</td>
+<td><input id="subtotal" readonly></td>
+</tr>
+
+<tr>
+<td>CGST @ 9%</td>
+<td><input id="cgst" readonly></td>
+</tr>
+
+<tr>
+<td>SGST @ 9%</td>
+<td><input id="sgst" readonly></td>
+</tr>
+
+<tr>
+<td>GST Total</td>
+<td><input id="gst" readonly></td>
+</tr>
+
+<tr>
+<td><b>Total After Tax</b></td>
+<td><input id="grand" readonly></td>
+</tr>
+</table>
+
+<br>
+
+<!-- FOOTER -->
+<p><b>Bank:</b> Canara Bank | A/C: 04441010012990 | IFSC: CNRB0010444</p>
+<p><b>PAN:</b> AEHPB6749Q</p>
+
+<div style="text-align:right;margin-top:40px;">
+<b>For WATER INNOVATION SYSTEMS</b><br><br>
+Authorized Signatory
+</div>
+
+<button class="btn" onclick="calculate()">Calculate</button>
+<button class="btn" onclick="window.print()">Print</button>
+
+</div>
+
+<script>
+let count = 0;
+
+function addRow() {
+    count++;
+    let table = document.getElementById("items");
+    let row = table.insertRow();
+
+    row.innerHTML = `
+    <td>${count}</td>
+    <td><input></td>
+    <td><input></td>
+    <td><input type="number" oninput="calc(this)"></td>
+    <td><input></td>
+    <td><input type="number" oninput="calc(this)"></td>
+    <td><input readonly></td>
+    `;
+}
+
+function calc(el) {
+    let row = el.parentNode.parentNode;
+    let qty = row.cells[3].children[0].value || 0;
+    let rate = row.cells[5].children[0].value || 0;
+
+    row.cells[6].children[0].value = qty * rate;
+    calculate();
+}
+
+function calculate() {
+    let rows = document.getElementById("items").rows;
+    let total = 0;
+
+    for (let i = 1; i < rows.length; i++) {
+        let val = rows[i].cells[6].children[0].value || 0;
+        total += parseFloat(val);
+    }
+
+    let cgst = total * 0.09;
+    let sgst = total * 0.09;
+
+    document.getElementById("subtotal").value = total.toFixed(2);
+    document.getElementById("cgst").value = cgst.toFixed(2);
+    document.getElementById("sgst").value = sgst.toFixed(2);
+    document.getElementById("gst").value = (cgst + sgst).toFixed(2);
+    document.getElementById("grand").value = (total + cgst + sgst).toFixed(2);
+}
+</script>
+
+</body>
+</html>
