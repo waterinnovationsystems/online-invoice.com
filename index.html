@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <title>Tax Invoice</title>
 
-<h2 style="text-align:center; margin-bottom:10px;">
-    TAX INVOICE
-</h2>
-    
 <style>
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .invoice-box {
@@ -34,18 +35,13 @@ body {
 .company-details {
     font-weight: bold;
 }
-    
+
 .invoice-details {
     width: 40%;
 }
 
 .logo {
     width: 120px;
-    margin-bottom: 5px;
-}
-
-.vendor-box {
-    margin-top: 10px;
 }
 
 table {
@@ -72,16 +68,9 @@ input, textarea {
     font-size: 12px;
 }
 
-.bold-input {
-    font-weight: bold;
-}
-    
 textarea {
     resize: none;
-}
-
-.right {
-    text-align: right;
+    font-weight: bold;
 }
 
 .btn {
@@ -90,29 +79,53 @@ textarea {
     cursor: pointer;
 }
 
-
+/* PRINT SETTINGS */
 @media print {
+
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+
+    body {
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .invoice-box {
+        width: 190mm;
+        padding: 10mm;
+        border: 1px solid black;
+    }
+
     .btn {
         display: none;
     }
+
+    body::after {
+        content: "Computer Generated Document";
+        position: fixed;
+        bottom: 5mm;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 11px;
+    }
 }
-
-
 </style>
 
 </head>
 
 <body>
 
+<h2>TAX INVOICE</h2>
+
 <div class="invoice-box">
 
-<!-- HEADER -->
 <div class="header">
 
 <div class="company">
-
-<!-- LOGO -->
-<img src="logo/logo_color.png" class="logo" alt="Company Logo">
+<img src="logo/logo_color.png" class="logo">
 
 <div class="company-details">
 NO.695/90, Mahadeva Arcade,<br>
@@ -122,9 +135,8 @@ Phone: 9900204599<br>
 GSTN: 29AEHPB6749Q1ZQ
 </div>
 
-<!-- VENDOR DETAILS -->
-<br><br>
-<b>Vendor / Buyer Details:</b><br>
+<br>
+<b>Vendor / Buyer Details:</b>
 <textarea rows="3"></textarea>
 
 </div>
@@ -142,34 +154,38 @@ GSTN: 29AEHPB6749Q1ZQ
 <tr><td>Place of Supply</td><td><input></td></tr>
 </table>
 </div>
+
 </div>
 
 <br>
 
-<table>
+<table id="items">
 <tr>
-<th style="width:5%">Sl No</th>
-<th style="width:35%">Product/Service</th>
-<th style="width:10%">HSN</th>
-<th style="width:10%">Qty</th>
-<th style="width:10%">UOM</th>
-<th style="width:15%">Rate</th>
-<th style="width:15%">Amount</th>
+<th>Sl No</th>
+<th>Product/Service</th>
+<th>HSN</th>
+<th>Qty</th>
+<th>UOM</th>
+<th>Rate</th>
+<th>Amount</th>
+<th>Action</th>
 </tr>
 </table>
 
-<br>
+<button class="btn" onclick="addRow()">Add Item</button>
+
+<br><br>
 
 <table>
-<tr><td>Total Before Tax</td><td></td></tr>
-<tr><td>CGST @ 9%</td><td></td></tr>
-<tr><td>SGST @ 9%</td><td></td></tr>
-<tr><td>GST Total</td><td></td></tr>
-<tr><td><b>Total After Tax</b></td><td></td></tr>
+<tr><td>Total Before Tax</td><td><input id="subtotal" readonly></td></tr>
+<tr><td>CGST @ 9%</td><td><input id="cgst" readonly></td></tr>
+<tr><td>SGST @ 9%</td><td><input id="sgst" readonly></td></tr>
+<tr><td>GST Total</td><td><input id="gst" readonly></td></tr>
+<tr><td><b>Total After Tax</b></td><td><input id="grand" readonly></td></tr>
 </table>
 
 <br>
-<!-- FOOTER -->
+
 <p><b>Bank:</b> Canara Bank | A/C: 04441010012990 | IFSC: CNRB0010444</p>
 <p><b>PAN:</b> AEHPB6749Q</p>
 
@@ -179,12 +195,63 @@ Authorized Signatory
 </div>
 
 <button class="btn" onclick="calculate()">Calculate</button>
-<button class="btn" onclick="window.print()">Print</button>
 <button class="btn" onclick="window.print()">Save / Print Invoice</button>
-    
-</div>
- 
 
+</div>
+
+<script>
+let count = 0;
+
+function addRow() {
+    count++;
+    let table = document.getElementById("items");
+    let row = table.insertRow();
+
+    row.innerHTML = `
+    <td>${count}</td>
+    <td><input></td>
+    <td><input></td>
+    <td><input type="number" oninput="calc(this)"></td>
+    <td><input></td>
+    <td><input type="number" oninput="calc(this)"></td>
+    <td><input readonly></td>
+    <td><button onclick="this.parentElement.parentElement.remove();calculate()">X</button></td>
+    `;
+}
+
+function calc(el) {
+    let row = el.parentNode.parentNode;
+    let qty = row.cells[3].children[0].value || 0;
+    let rate = row.cells[5].children[0].value || 0;
+
+    row.cells[6].children[0].value = qty * rate;
+    calculate();
+}
+
+function calculate() {
+    let rows = document.getElementById("items").rows;
+    let total = 0;
+
+    for (let i = 1; i < rows.length; i++) {
+        let val = rows[i].cells[6].children[0].value || 0;
+        total += parseFloat(val);
+    }
+
+    let cgst = total * 0.09;
+    let sgst = total * 0.09;
+
+    document.getElementById("subtotal").value = total.toFixed(2);
+    document.getElementById("cgst").value = cgst.toFixed(2);
+    document.getElementById("sgst").value = sgst.toFixed(2);
+    document.getElementById("gst").value = (cgst + sgst).toFixed(2);
+    document.getElementById("grand").value = (total + cgst + sgst).toFixed(2);
+}
+</script>
+
+</body>
+</html>
+
+<script>
 <style>
 @media print {
 
