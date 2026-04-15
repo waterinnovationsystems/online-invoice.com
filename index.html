@@ -131,71 +131,7 @@ GSTN: 29AEHPB6749Q1ZQ
 </div>
 
     
-<div class="invoice-details">
-<table>
-<tr><td>Invoice No</td><td><input></td></tr>
-<tr><td>Date</td><td><input type="date"></td></tr>
-<tr><td>Delivery Note</td><td><input></td></tr>
-<tr><td>Payment Mode</td><td><input></td></tr>
-<tr><td>Buyer's Order No</td><td><input></td></tr>
-<tr><td>Dated</td><td><input type="date"></td></tr>
-<tr><td>E-Way Bill</td><td><input></td></tr>
-<tr><td>Transport</td><td><input></td></tr>
-<tr><td>Place of Supply</td><td><input></td></tr>
-</table>
-</div>
-
-</div>
-
-<br>
-
-<!-- ITEM TABLE -->
-<table id="items">
-<tr>
-<th>Sl No</th>
-<th>Product/Service</th>
-<th>HSN</th>
-<th>Qty</th>
-<th>UOM</th>
-<th>Rate</th>
-<th>Amount</th>
-</tr>
-</table>
-
-<button class="btn" onclick="let t=document.getElementById('items');let r=t.insertRow();r.innerHTML='<td>'+(t.rows.length-1)+'</td><td><input></td><td><input></td><td><input type=number oninput=calc(this)></td><td><input></td><td><input type=number oninput=calc(this)></td><td><input readonly></td>';">Add Item</button>
-<button class="btn" onclick="document.getElementById('items').deleteRow(-1)">Remove Item</button>
-
-<br><br>
-
-<!-- TOTALS -->
-<table>
-<tr>
-<td>Total Before Tax</td>
-<td><input id="subtotal" readonly></td>
-</tr>
-
-<tr>
-<td>CGST @ 9%</td>
-<td><input id="cgst" readonly></td>
-</tr>
-
-<tr>
-<td>SGST @ 9%</td>
-<td><input id="sgst" readonly></td>
-</tr>
-
-<tr>
-<td>GST Total</td>
-<td><input id="gst" readonly></td>
-</tr>
-
-<tr>
-<td><b>Total After Tax</b></td>
-<td><input id="grand" readonly></td>
-</tr>
-</table>
-
-<br>
+<div class="invoice-details"> <table> <tr><td>Invoice No</td><td><input></td></tr> <tr><td>Date</td><td><input type="date"></td></tr> <tr><td>Delivery Note</td><td><input></td></tr> <tr><td>Payment Mode</td><td><input></td></tr> <tr><td>Buyer's Order No</td><td><input></td></tr> <tr><td>Dated</td><td><input type="date"></td></tr> <tr><td>E-Way Bill</td><td><input></td></tr> <tr><td>Transport</td><td><input></td></tr> <tr><td>Place of Supply</td><td><input></td></tr> </table> </div> </div> <br> <!-- ITEM TABLE --> <table id="items"> <tr> <th>Sl No</th> <th>Product/Service</th> <th>HSN</th> <th>Qty</th> <th>UOM</th> <th>Rate</th> <th>Amount</th> </tr> </table> <button class="btn" onclick="addRow()">Add Item</button> <br><br> <!-- TOTALS --> <table> <tr> <td>Total Before Tax</td> <td><input id="subtotal" readonly></td> </tr> <tr> <td>CGST @ 9%</td> <td><input id="cgst" readonly></td> </tr> <tr> <td>SGST @ 9%</td> <td><input id="sgst" readonly></td> </tr> <tr> <td>GST Total</td> <td><input id="gst" readonly></td> </tr> <tr> <td><b>Total After Tax</b></td> <td><input id="grand" readonly></td> </tr> </table> <br>
 
 <!-- FOOTER -->
 <p><b>Bank:</b> Canara Bank | A/C: 04441010012990 | IFSC: CNRB0010444</p>
