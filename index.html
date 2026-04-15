@@ -121,10 +121,20 @@ GSTN: 29AEHPB6749Q1ZQ
 <!-- VENDOR DETAILS -->
 <div class="vendor-box">
 <br>
-<b>Vendor / Buyer Details:</b><br>
-<textarea rows="4" placeholder="Enter Buyer Name, Address, GST, Contact..."></textarea>
-</div>
+<b>Vendor / Buyer Details:</b><br><br>
 
+GST Number:
+<input type="text" id="gstInput" placeholder="Enter GST Number">
+<button class="btn" onclick="fetchGST()">Search</button>
+
+<br><br>
+
+<textarea id="vendorDetails" rows="4"
+placeholder="Vendor details will auto-fill or enter manually..."></textarea>
+
+<br><br>
+
+<button class="btn" onclick="enableManual()">Manual Entry</button>
 </div>
 
 <div class="invoice-details">
@@ -272,9 +282,58 @@ function calculate() {
 
 </script>
 
-<style>
+    <style>
 /* your existing CSS */
 
+// DEMO GST DATABASE (Replace with real API later)
+const gstDatabase = {
+    "29ABCDE1234F1Z5": "ABC Pvt Ltd\nBangalore, Karnataka\nGST: 29ABCDE1234F1Z5\nPhone: 9876543210",
+    "27AAAPL1234C1ZV": "XYZ Industries\nMumbai, Maharashtra\nGST: 27AAAPL1234C1ZV\nPhone: 9123456780"
+};
+
+// FETCH GST DETAILS
+function fetchGST() {
+    let gst = document.getElementById("gstInput").value.trim().toUpperCase();
+    let output = document.getElementById("vendorDetails");
+
+    if (!gst) {
+        alert("Please enter GST Number");
+        return;
+    }
+
+    // Simulated lookup
+    if (gstDatabase[gst]) {
+        output.value = gstDatabase[gst];
+        output.readOnly = true;
+    } else {
+        output.value = "GST not found.\nYou can enter details manually.";
+        output.readOnly = false;
+    }
+}
+
+// ENABLE MANUAL ENTRY
+function enableManual() {
+    let output = document.getElementById("vendorDetails");
+    output.readOnly = false;
+    output.focus();
+}
+
+
+
+    
+
+fetch("https://api.example.com/gst/" + gst)
+.then(res => res.json())
+.then(data => {
+    output.value = data.name + "\n" + data.address + "\nGST: " + gst;
+})
+.catch(() => {
+    output.value = "GST not found. Enter manually.";
+});        
+
+
+
+        
 function loadSign(event) {
     const reader = new FileReader();
 
