@@ -206,6 +206,22 @@ Authorized Signatory
 
 </div>
 
+
+
+<!-- DRAGGABLE SIGNATURE AREA -->
+<div id="signatureContainer" style="position:relative; height:120px; border:1px dashed #000; margin-top:10px;">
+    
+    <div id="draggableSign" 
+         style="width:150px; height:60px; border:1px solid black; text-align:center; cursor:move; position:absolute; top:20px; left:20px; background:#fff;">
+        Drag Signature Here
+    </div>
+
+</div>
+
+<input type="file" accept="image/*" onchange="loadSign(event)">
+
+    
+
 <script>
 let count = 0;
 
@@ -259,8 +275,71 @@ function calculate() {
 <style>
 /* your existing CSS */
 
+function loadSign(event) {
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        let box = document.getElementById("draggableSign");
+        box.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%;">`;
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+}
 
 
+    
+
+// DRAG FUNCTION
+let dragItem = document.getElementById("draggableSign");
+
+let offsetX = 0, offsetY = 0, isDragging = false;
+
+dragItem.addEventListener("mousedown", function(e) {
+    isDragging = true;
+    offsetX = e.offsetX;
+    offsetY = e.offsetY;
+});
+
+document.addEventListener("mousemove", function(e) {
+    if (!isDragging) return;
+
+    let container = document.getElementById("signatureContainer");
+    let rect = container.getBoundingClientRect();
+
+    let x = e.clientX - rect.left - offsetX;
+    let y = e.clientY - rect.top - offsetY;
+
+    dragItem.style.left = x + "px";
+    dragItem.style.top = y + "px";
+});
+
+document.addEventListener("mouseup", function() {
+    isDragging = false;
+});
+    
+
+
+
+
+    @media print {
+
+    #signatureContainer {
+        border: none;
+    }
+
+    #draggableSign {
+        border: none;
+    }
+
+    input[type="file"],
+    .btn {
+        display: none !important;
+    }
+}
+
+
+
+    
 
 
 /* PRINT SETTINGS */
