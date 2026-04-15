@@ -168,11 +168,11 @@ GSTN: 29AEHPB6749Q1ZQ
 <th>UOM</th>
 <th>Rate</th>
 <th>Amount</th>
-<th>Action</th>
 </tr>
 </table>
 
 <button class="btn" onclick="addRow()">Add Item</button>
+<button class="btn" onclick="let t=document.getElementById('items'); if(t.rows.length>1)t.deleteRow(-1)">Remove Item</button>
 
 <br><br>
 
